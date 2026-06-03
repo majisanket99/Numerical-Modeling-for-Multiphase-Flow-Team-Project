@@ -1,8 +1,0 @@
-#make fft
-make ibm2d
-#xterm -e "cd postproc_linux && python mouse.py" &
-#sleep 0.1
-xterm -e ./ibm2d.out &
-sleep 0.1
-xterm -e "cd postproc_linux && gnuplot plot_solution.plt"
-echo '... done.'

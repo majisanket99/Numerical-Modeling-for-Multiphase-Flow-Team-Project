@@ -9,15 +9,35 @@ __pycache__/
 *.pyo
 *.pyd
 
-# VS Code settings, optional
+# VS Code
 .vscode/
 
-# Results and generated files, optional
+# Python generated results
 results/
 figures/
 *.csv
 *.mp4
 *.avi
+
+# Fortran build files
+*.o
+*.mod
+*.MOD
+*.out
+*.exe
+
+# Fortran backup files
+*~
+
+# Fortran generated results
+fortran_solver/results/*
+fortran_solver/ibm2d.out
+
+# Keep results folder
+!fortran_solver/results/.gitkeep
+
+# Uploaded archive no longer needed
+ibm2d_minimal_working_example.tar.gz
 
 # OS files
 .DS_Store
