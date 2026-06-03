@@ -1,0 +1,68 @@
+subroutine solve()
+
+! *****************************************************************************
+! 
+!     purpose: 	  IBM solver
+! 
+!     log:          2015 / 03 - s.tschisgale
+!                        / 05 - b.krull
+!
+! *****************************************************************************
+  
+  use Module_GlobalVariables
+  use Module_ImmersedBoundary
+  use Module_Fluid
+  
+  implicit none
+
+#include "main.def"
+
+  real    :: uu(N,N,2), &  ! preliminary velocity
+             ff(N,N,2)     ! force field acting on fluid
+
+  integer :: i, j, b
+
+! update phi
+
+! _cds
+phi = phi - dt*( ddxc(phi*u(:,:,1)) + ddyc(phi*u(:,:,2)) )
+!phi = min(max(0.,phi),1.) ! clip to range
+
+! _uds
+! phi = phi - dt*( max(u(:,:,1),0.)*ddxm(phi) + min(u(:,:,1),0.)*ddxp(phi) + max(u(:,:,2),0.)*ddym(phi) + min(u(:,:,2),0.)*ddyp(phi) )
+
+! calculate gravity from phi
+ff = 0.0
+ff(:,:,2) = ( 1.0  - rho2/rho )*phi*10.0
+  
+! ! calculate immersed boundary forces
+!   ff = 0.0
+! 
+!   do b=1,Nb ! for each immersed boundary object
+!     
+!     ! _get velocity at Lagrangian points from Eulerian velocity field
+!     IB(b)%U  = interpolation(u, IB(b)%X, IB(b)%Nk)
+! 
+!        ! _prediction step (Runge-Kutta method)
+!        IB(b)%XX = IB(b)%X + dt/2 * IB(b)%U 
+! 
+!     ! _calculate Lagrangian force
+!     IB(b)%F  = forcing(IB(b)%XX, IB(b)%U, IB(b)%UD, IB(b)%Nk)
+!     
+!     ! _get Eulerian representation of Lagrangian forces
+!     ff = ff + spreading(IB(b)%F, IB(b)%XX, IB(b)%Nk)
+!     
+!   end do
+  
+! calculate new velocity field u with Eulerian force field ff
+  call fluid(u, uu, ff)
+
+! move immersed boundaries
+!   do b=1,1
+!     
+!     IB(b)%U = interpolation(uu, IB(b)%XX, IB(b)%Nk)
+!     IB(b)%X = IB(b)%X + dt * sum( IB(b)%U )/real(IB(b)%Nk)
+!        
+!   end do
+
+end subroutine solve

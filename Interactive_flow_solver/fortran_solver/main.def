@@ -1,0 +1,5 @@
+! *** COMPILER DIRECTIVES *******************************************
+
+! --- tracer particle (on/off <-> #define/#undef)--------------------
+
+#undef _tracer_

@@ -1,0 +1,26 @@
+#!/usr/bin/gnuplot -persist
+
+set xrange [0:N-1]
+set yrange [0:N-1]
+set xtics 1
+set ytics 1
+set format ''
+set tics scale 0
+#set grid ytics lc rgb "black" lw 0.2 lt 1
+#set grid xtics lc rgb "black" lw 0.2 lt 1
+
+set pm3d map
+set palette rgbformulae 22,13,-31
+##set pm3d interpolate 4,4
+#set cblabel '|u|'
+set format cb "%G"
+set cblabel font ',14'
+set cbrange[0.0:1.0]
+
+set size square
+
+splot '../results/fluid.bin' binary array=(N,N) format="%float" notitle, \
+      '../results/ib.dat' u 1:2:(100.0) w points pt 7 ps 1 lt rgb 'black' notitle, \
+#      '../results/tp.dat' u 1:2:(100.0) w points pt 7 ps 0.9 lt rgb 'black' notitle
+
+# EOF
