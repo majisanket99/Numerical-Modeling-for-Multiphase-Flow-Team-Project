@@ -45,3 +45,4 @@ Thumbs.db
 
 # Jupyter checkpoints
 .ipynb_checkpoints/
+fortran_solver/targetPos/targetPos.dat
