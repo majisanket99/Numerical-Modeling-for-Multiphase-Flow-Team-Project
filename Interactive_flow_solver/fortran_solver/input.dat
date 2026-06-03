@@ -1,6 +1,6 @@
 $general
 
-    n_steps   =  500 	        ,  ! number of time steps
+    n_steps   =  -10 	        ,  ! number of time steps
     t_end     =  400.0		,  ! physical time
     dt        =  0.002        	,  ! time step ! cyl: 0.002
     nt_out    =  10             ,  ! output every nt_out timesteps
