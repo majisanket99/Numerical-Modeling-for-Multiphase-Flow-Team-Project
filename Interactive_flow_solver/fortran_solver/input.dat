@@ -1,0 +1,33 @@
+$general
+
+    n_steps   =  500 	        ,  ! number of time steps
+    t_end     =  400.0		,  ! physical time
+    dt        =  0.002        	,  ! time step ! cyl: 0.002
+    nt_out    =  10             ,  ! output every nt_out timesteps
+    rho       =  1.0            ,  ! density
+    rho2      =  1.05           ,  ! density 2 (for phi=1.)
+    nu        =  0.0002         ,  ! kinematic viscosity ! cyl: 0.0005
+    N         =  90             ,  ! number of gridpoints in x & y
+    
+$end
+
+$velocity_bc
+
+    setbc_north = .T.           ,    ! periodic (.F.) or set BC (.T.)
+    setbc_east  = .T.           ,
+    setbc_south = .T.           ,
+    setbc_west  = .T.           ,
+
+    u_north   =  0.0            ,    ! velocity boundary conditions
+    v_north   =  0.0           ,
+
+    u_east    =  0.6            ,
+    v_east    =  0.0            ,
+    
+    u_south   =  0.0            ,
+    v_south   =  0.0            ,
+    
+    u_west    =  0.6            ,
+    v_west    =  0.0            ,
+
+$end

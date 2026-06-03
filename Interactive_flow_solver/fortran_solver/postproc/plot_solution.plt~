@@ -1,0 +1,16 @@
+#!/usr/bin/gnuplot -persist
+
+stats '../results/info.dat'
+N  = STATS_mean_x
+Nk = STATS_mean_y
+
+c=1
+while (c==1) {
+pause 0.06
+#replot
+#system("eval $(xdotool getmouselocation --shell); echo $X $Y > ../results/cursor.dat")
+load "layout.plt"
+
+}
+
+# EOF
