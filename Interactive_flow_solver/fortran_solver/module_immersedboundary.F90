@@ -286,13 +286,16 @@ module Module_ImmersedBoundary
 
       ! relative position, mirror y axis
       ! get display resolution with $ xrandr | grep '*'
-      cur(1) =     cur(1)/1366.
-      cur(2) = 1 - cur(2)/768.
+      cur(1) =     cur(1)/1920.
+      cur(2) = 1 - cur(2)/1080.
+
+      cur(1) = min(max(cur(1), 0.0), 1.0)
+      cur(2) = min(max(cur(2), 0.0), 1.0)
 
       ! transform to physical coordinates
-      X(1) =   cur(1)*L !( cur(1)/1368.0      )*L
-      X(2) =   cur(2)*L  !( 1.0 - cur(2)/768.0 )*L    ! y-axis upwards      
-      
+      X(1) =   cur(1)*L
+      X(2) =   cur(2)*L   ! y-axis upwards      
+
     end if !lo  
   
   end function getTargetPos
