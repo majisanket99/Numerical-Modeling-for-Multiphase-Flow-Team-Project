@@ -26,7 +26,7 @@ set tmargin at screen 0.99
 
 splot '../results/fluid.bin' binary array=(N,N) format="%float" notitle, \
       '../results/ib.dat' u 1:2:(100.0) w points pt 7 ps 1.1 lt rgb 'white' notitle, \
-      '../targetPos/targetPos.dat' u ($1/1366*N):((1.0-$2/768)*N):(100.0) w points pt 1 ps 3 lw 5 lt rgb 'white' notitle, \
+      '../targetPos/targetPos.dat' u ($1/1920*N):((1.0-$2/1080)*N):(100.0) w points pt 1 ps 3 lw 5 lt rgb 'white' notitle, \
 #      '../results/tp.dat' u 1:2:(100.0) w points pt 7 ps 0.9 lt rgb 'black' notitle
 
 # EOF
