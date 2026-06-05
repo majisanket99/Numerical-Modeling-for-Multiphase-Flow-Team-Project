@@ -11,9 +11,9 @@ Nk = STATS_mean_y
 c=1
 while (c==1) {
 
-pause 0.06
+pause 0.15
 #replot
-load "layout.plt"
+load "layout_fluid.plt"
 
 }
 
