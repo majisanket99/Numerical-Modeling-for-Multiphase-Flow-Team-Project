@@ -15,6 +15,12 @@ module Module_ImmersedBoundary
   implicit none
   save
   
+  integer :: speed_mode = 2
+
+    real :: control_gain_slow   = 100.0
+    real :: control_gain_medium = 300.0
+    real :: control_gain_fast   = 500.0
+
   integer :: Nb
 
   type ImmersedBoundary
@@ -235,8 +241,13 @@ module Module_ImmersedBoundary
     real    :: FX(Nk,2)
     real    :: X(Nk,2), X0(Nk,2), U(Nk,2), UD(Nk,2)
     integer :: Nk
-    
+    integer :: speed_mode = 2
+
+    real :: control_gain_slow   = 100.0
+    real :: control_gain_medium = 300.0
+    real :: control_gain_fast   = 500.0
     integer :: k
+    logical :: slow_file, medium_file, fast_file
     real    :: C, DIF(Nk,2)
     
     real    :: Xsoll(2)      ! target position
@@ -258,7 +269,44 @@ module Module_ImmersedBoundary
     
     ! artificial force
     Xsoll = getTargetPos()
-    C = 500.0
+
+    ! Check speed control flags
+    inquire(file='./controls/slow.flag', exist=slow_file)
+    inquire(file='./controls/medium.flag', exist=medium_file)
+    inquire(file='./controls/fast.flag', exist=fast_file)
+
+    if (slow_file) then
+      speed_mode = 1
+      call system("rm -f ./controls/slow.flag")
+    end if
+
+    if (medium_file) then
+      speed_mode = 2
+      call system("rm -f ./controls/medium.flag")
+    end if
+
+    if (fast_file) then
+      speed_mode = 3
+      call system("rm -f ./controls/fast.flag")
+    end if
+
+    ! Select control strength
+    select case(speed_mode)
+
+    case(1)
+      C = control_gain_slow
+
+    case(2)
+      C = control_gain_medium
+
+    case(3)
+      C = control_gain_fast
+
+    case default
+      C = control_gain_medium
+
+    end select
+    ! C = 500.0
     FX(:,1) = FX(:,1) + C*sign( 1., Xsoll(1) - sum(X(:,1))/L/Nk )
     FX(:,2) = FX(:,2) + C*sign( 1., Xsoll(2) - sum(X(:,2))/L/Nk )
 
