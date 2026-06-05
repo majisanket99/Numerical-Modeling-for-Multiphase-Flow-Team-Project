@@ -14,7 +14,9 @@ module Module_ImmersedBoundary
 
   implicit none
   save
-  
+  integer :: interaction_mode = 1
+    logical :: object_placed = .false.
+    real :: placed_target(2) = (/0.5, 0.5/)
   integer :: speed_mode = 2
 
     real :: control_gain_slow   = 100.0
@@ -322,7 +324,7 @@ module Module_ImmersedBoundary
     real    :: X(2)
     real    :: cur(2)
     logical :: lo
-    
+    logical :: place_file, follow_file
     ! use xdotool to get mouse coordinates
     call system("eval $(xdotool getmouselocation --shell); echo $X $Y > ./targetPos/targetPos.dat")
         
@@ -343,7 +345,29 @@ module Module_ImmersedBoundary
       ! transform to physical coordinates
       X(1) =   cur(1)*L
       X(2) =   cur(2)*L   ! y-axis upwards      
+      ! Check if user wants to place/fix the object at the current mouse target
+      inquire(file='./controls/place.flag', exist=place_file)
 
+      if (place_file) then
+        placed_target = X
+        object_placed = .true.
+	interaction_mode = 0
+	call system("rm -f ./controls/place.flag")
+      end if
+
+      ! Check if user wants to return to mouse-following mode
+      inquire(file='./controls/follow.flag', exist=follow_file)
+
+      if (follow_file) then
+	object_placed = .false.
+	interaction_mode = 1
+	call system("rm -f ./controls/follow.flag")
+      end if
+
+      ! If object is placed, keep using the fixed target
+      if (interaction_mode == 0 .and. object_placed) then
+	X = placed_target
+      end if
     end if !lo  
   
   end function getTargetPos
