@@ -1,25 +1,13 @@
-# Numerical-Modeling-for-Multiphase-Flow-Team-Project
-Topic 4: Interactive real-time flow solver
+Project goal
+Software requirements
+How to build the Fortran solver
+How to run the live interactive solver
+How to run baseline and perturbed cases
+How to generate comparison plots
+Known limitations
 
-# IBM Real-Time Flow Solver
-
-This project develops an interactive real-time 2D flow solver using Python, NumPy, and Pygame.  
-The goal is to control an immersed boundary object with the mouse and use it to perturb a vortex street.
-
-## Setup
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-python main.py
-
-1. Mouse-controlled circle
-2. Convert circle into IBM boundary points
-3. Create a simple 2D grid using NumPy
-4. Visualize a scalar field, for example vorticity
-5. Add a simple flow field
-6. Add IBM forcing around the circle
-7. Move the IBM object using the mouse
-8. Save time, object position, and maximum vorticity
-9. Compare unperturbed and perturbed vortex street cases
+This project adapts a Fortran IBM2D solver for real-time interactive flow control.
+Mouse coordinates are read using xdotool and passed to the immersed boundary module.
+The solver uses gnuplot X11 for live visualization.
+The IBM object follows the cursor and introduces a localized disturbance into the flow.
+Postprocessing scripts compare baseline and perturbed slice data.
